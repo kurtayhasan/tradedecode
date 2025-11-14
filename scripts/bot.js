@@ -3,7 +3,8 @@ import fs from "fs";
 import slugify from "slugify";
 
 const HF_KEY = process.env.HF_API_KEY;
-const MODEL = "mistralai/Mixtral-8x7B-Instruct-v0.1";
+// Using a more reliable model that's always available
+const MODEL = "meta-llama/Llama-3.2-3B-Instruct";
 const USED_TOPICS_FILE = "used_topics.txt";
 const MIN_CONTENT_LENGTH = 800; // Minimum character count for quality control
 
