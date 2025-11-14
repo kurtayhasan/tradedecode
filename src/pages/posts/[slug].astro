@@ -1,12 +1,36 @@
 ---
 import fs from "fs";
+import path from "path";
 
-const { slug } = Astro.params;
-const file = fs.readFileSync(`src/content/posts/${slug}.md`, "utf8");
-export const content = file;
+export function getStaticPaths() {
+  const postsDir = "src/content/posts";
+  
+  // If directory doesn't exist or is empty, return empty array
+  if (!fs.existsSync(postsDir)) {
+    return [];
+  }
+  
+  const files = fs.readdirSync(postsDir);
+  
+  return files.map(file => {
+    const content = fs.readFileSync(`${postsDir}/${file}`, "utf8");
+    const slug = file.replace(/\.md$/, "");
+    
+    return {
+      params: { slug },
+      props: { content }
+    };
+  });
+}
+
+const { content } = Astro.props;
 ---
 
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TradeDecode Post</title>
+  </head>
   <body>
     <article>
       <pre>{content}</pre>
