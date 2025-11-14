@@ -2,14 +2,14 @@ import fetch from "node-fetch";
 import fs from "fs";
 import slugify from "slugify";
 
-const HF_KEY = process.env.HF_API_KEY;
-// Using GPT-2 which is always available on HuggingFace free tier
-const MODEL = "openai-community/gpt2-large";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 const USED_TOPICS_FILE = "used_topics.txt";
-const MIN_CONTENT_LENGTH = 500; // Lowered for GPT-2's shorter outputs
+const MIN_CONTENT_LENGTH = 800;
 
-if (!HF_KEY) {
-  console.error("Error: HF_API_KEY environment variable is not defined");
+if (!GEMINI_API_KEY) {
+  console.error("Error: GEMINI_API_KEY environment variable is not defined");
+  console.error("Get your free API key from: https://makersuite.google.com/app/apikey");
   process.exit(1);
 }
 
@@ -60,45 +60,67 @@ function extractMetadata(text) {
 }
 
 async function generateContent(topic) {
-  const prompt = `Write a detailed article about ${topic}.
+  const prompt = `You are a professional trading and cryptocurrency content writer. Write a comprehensive, SEO-optimized article in English.
 
-# ${topic}
+IMPORTANT: Start your response with these exact lines:
+TITLE: [Write an engaging, SEO-friendly title about ${topic}]
+META_DESCRIPTION: [Write a compelling 150-160 character meta description]
 
-## Introduction
+Then write the full article about: ${topic}
 
-${topic} is an important topic in trading and cryptocurrency. Here's what you need to know:
+Article Requirements:
+- 1000 to 1500 words
+- Use proper markdown headings (# ## ###)
+- Include an engaging introduction
+- Provide actionable insights and real value
+- Use bullet points and lists where appropriate
+- Include a strong conclusion
+- Write in a professional yet accessible tone
+- Focus on practical information for traders
+- No fluff or filler content
+- Ensure content is unique and valuable
 
-## Key Points
-
-`;
+Write the complete article now:`;
 
   try {
-    const res = await fetch(`https://api-inference.huggingface.co/models/${MODEL}`, {
+    const res = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: "POST",
       headers: {
-        "Authorization": "Bearer " + HF_KEY,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-        inputs: prompt,
-        parameters: {
-          max_length: 800,
-          temperature: 0.8,
-          top_p: 0.9,
-          do_sample: true
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 2048,
         }
       }),
     });
 
     if (!res.ok) {
-      console.error(`API request failed with status ${res.status}`);
+      const errorText = await res.text();
+      console.error(`Gemini API request failed with status ${res.status}`);
+      console.error(`Error details: ${errorText}`);
       process.exit(1);
     }
 
     const data = await res.json();
-    return data[0]?.generated_text || "";
+    const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    
+    if (!generatedText) {
+      console.error("No content generated from Gemini API");
+      process.exit(1);
+    }
+    
+    return generatedText;
   } catch (error) {
-    console.error("Error calling HuggingFace API:", error.message);
+    console.error("Error calling Gemini API:", error.message);
     process.exit(1);
   }
 }

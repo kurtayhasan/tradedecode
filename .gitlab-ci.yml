@@ -14,7 +14,8 @@ generate_content:
   script:
     - echo "Installing dependencies..."
     - npm install
-    - echo "Generating content..."
+    - echo "Generating content with Gemini AI..."
+    - export GEMINI_API_KEY="${GEMINI_API_KEY}"
     - npm run bot
     - echo "Configuring git..."
     - git config --global user.email "bot@tradedecode.com"
