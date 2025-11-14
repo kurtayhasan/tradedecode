@@ -3,10 +3,10 @@ import fs from "fs";
 import slugify from "slugify";
 
 const HF_KEY = process.env.HF_API_KEY;
-// Using a more reliable model that's always available
-const MODEL = "meta-llama/Llama-3.2-3B-Instruct";
+// Using GPT-2 which is always available on HuggingFace free tier
+const MODEL = "openai-community/gpt2-large";
 const USED_TOPICS_FILE = "used_topics.txt";
-const MIN_CONTENT_LENGTH = 800; // Minimum character count for quality control
+const MIN_CONTENT_LENGTH = 500; // Lowered for GPT-2's shorter outputs
 
 if (!HF_KEY) {
   console.error("Error: HF_API_KEY environment variable is not defined");
@@ -60,27 +60,17 @@ function extractMetadata(text) {
 }
 
 async function generateContent(topic) {
-  const prompt = `You are a professional trading and cryptocurrency content writer. Write a comprehensive, SEO-optimized article in English.
+  const prompt = `Write a detailed article about ${topic}.
 
-IMPORTANT: Start your response with these exact lines:
-TITLE: [Write an engaging, SEO-friendly title here]
-META_DESCRIPTION: [Write a compelling 150-160 character meta description here]
+# ${topic}
 
-Then write the full article about: ${topic}
+## Introduction
 
-Article Requirements:
-- 1000 to 1500 words minimum
-- Use proper H1, H2, H3 markdown headings (# ## ###)
-- Include an engaging introduction
-- Provide actionable insights and real value
-- Use bullet points and lists where appropriate
-- Include a strong conclusion
-- Write in a professional yet accessible tone
-- Focus on practical information
-- No fluff or filler content
-- Ensure content is unique and valuable
+${topic} is an important topic in trading and cryptocurrency. Here's what you need to know:
 
-Write the article now:`;
+## Key Points
+
+`;
 
   try {
     const res = await fetch(`https://api-inference.huggingface.co/models/${MODEL}`, {
@@ -92,9 +82,10 @@ Write the article now:`;
       body: JSON.stringify({ 
         inputs: prompt,
         parameters: {
-          max_new_tokens: 2000,
-          temperature: 0.7,
-          top_p: 0.95
+          max_length: 800,
+          temperature: 0.8,
+          top_p: 0.9,
+          do_sample: true
         }
       }),
     });
