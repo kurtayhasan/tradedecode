@@ -1,0 +1,23 @@
+---
+import fs from "fs";
+import path from "path";
+
+const postsDir = "src/content/posts";
+const files = fs.existsSync(postsDir) ? fs.readdirSync(postsDir) : [];
+
+const posts = files.map(f => {
+  const raw = fs.readFileSync(`${postsDir}/${f}`, "utf8");
+  const title = raw.match(/title: "(.*)"/)?.[1] || "Untitled";
+  const slug = raw.match(/slug: "(.*)"/)?.[1] || "";
+  return { title, slug };
+});
+---
+
+<html>
+  <body>
+    <h1>TradeDecode — Automated AI Trading Blog</h1>
+    <ul>
+      {posts.map(p => <li><a href={`/posts/${p.slug}`}>{p.title}</a></li>)}
+    </ul>
+  </body>
+</html>
