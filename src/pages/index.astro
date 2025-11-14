@@ -24,6 +24,20 @@ const posts = files
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TradeDecode — AI-Powered Trading Blog</title>
     <meta name="description" content="Automated AI-generated trading and cryptocurrency insights" />
+    <link rel="canonical" href="https://tradedecode.com/" />
+    <link rel="alternate" type="application/rss+xml" title="TradeDecode RSS Feed" href="/rss.xml" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tradedecode.com/" />
+    <meta property="og:title" content="TradeDecode — AI-Powered Trading Blog" />
+    <meta property="og:description" content="Automated AI-generated trading and cryptocurrency insights" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://tradedecode.com/" />
+    <meta property="twitter:title" content="TradeDecode — AI-Powered Trading Blog" />
+    <meta property="twitter:description" content="Automated AI-generated trading and cryptocurrency insights" />
     <style>
       * {
         margin: 0;
@@ -158,7 +172,14 @@ const posts = files
     </main>
     
     <footer>
-      <p>Powered by Astro + HuggingFace AI | Auto-updated hourly</p>
+      <p>Powered by Astro + HuggingFace AI | Auto-updated every 4 hours</p>
+      <p style="margin-top: 0.5rem;">
+        <a href="/privacy-policy" style="color: #667eea; margin: 0 0.5rem;">Privacy Policy</a> |
+        <a href="/cookie-policy" style="color: #667eea; margin: 0 0.5rem;">Cookie Policy</a> |
+        <a href="/disclaimer" style="color: #667eea; margin: 0 0.5rem;">Disclaimer</a> |
+        <a href="/rss.xml" style="color: #667eea; margin: 0 0.5rem;">RSS Feed</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">&copy; 2025 TradeDecode. All content is AI-generated.</p>
     </footer>
   </body>
 </html>

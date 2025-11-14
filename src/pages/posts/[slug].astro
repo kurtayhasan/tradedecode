@@ -41,6 +41,20 @@ const { title, date, description, content } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} | TradeDecode</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={`https://tradedecode.com/posts/${Astro.params.slug}/`} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={`https://tradedecode.com/posts/${Astro.params.slug}/`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="article:published_time" content={date} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={`https://tradedecode.com/posts/${Astro.params.slug}/`} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
     <style>
       * {
         margin: 0;
@@ -151,6 +165,11 @@ const { title, date, description, content } = Astro.props;
     
     <footer>
       <p>Powered by Astro + HuggingFace AI</p>
+      <p style="margin-top: 0.5rem;">
+        <a href="/privacy-policy" style="color: #667eea; margin: 0 0.5rem;">Privacy Policy</a> |
+        <a href="/cookie-policy" style="color: #667eea; margin: 0 0.5rem;">Cookie Policy</a> |
+        <a href="/disclaimer" style="color: #667eea; margin: 0 0.5rem;">Disclaimer</a>
+      </p>
     </footer>
   </body>
 </html>
