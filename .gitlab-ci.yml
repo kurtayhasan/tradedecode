@@ -1,0 +1,27 @@
+image: node:20
+
+stages:
+  - generate
+
+variables:
+  GIT_STRATEGY: clone
+
+generate_content:
+  stage: generate
+  only:
+    - schedules
+    - web
+  script:
+    - echo "Installing dependencies..."
+    - npm install
+    - echo "Generating content..."
+    - npm run bot
+    - echo "Configuring git..."
+    - git config --global user.email "bot@tradedecode.com"
+    - git config --global user.name "AutoBot"
+    - git remote set-url origin https://oauth2:${GITLAB_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
+    - git add .
+    - git diff --staged --quiet || git commit -m "Auto content update [skip ci]"
+    - git push origin HEAD:${CI_COMMIT_REF_NAME} || echo "Nothing to push"
+  environment:
+    name: production
