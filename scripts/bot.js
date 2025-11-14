@@ -3,9 +3,9 @@ import fs from "fs";
 import slugify from "slugify";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-// Using v1 API with stable model name
-const GEMINI_MODEL = "gemini-1.5-flash";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`;
+// Using v1beta API - v1 doesn't support gemini-1.5-flash yet
+const GEMINI_MODEL = "gemini-1.5-flash-latest";
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 const USED_TOPICS_FILE = "used_topics.txt";
 const MIN_CONTENT_LENGTH = 800;
 
