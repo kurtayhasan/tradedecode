@@ -71,7 +71,7 @@ META_DESCRIPTION: [Write a compelling 150-160 character meta description]
 Then write the full article about: ${topic}
 
 Article Requirements:
-- 1000 to 1500 words
+- 800 to 100 words
 - Use proper markdown headings (# ## ###)
 - Include an engaging introduction
 - Provide actionable insights and real value
