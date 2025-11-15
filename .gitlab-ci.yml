@@ -2,6 +2,7 @@ image: node:20
 
 stages:
   - generate
+  - deploy
 
 variables:
   GIT_STRATEGY: clone
@@ -26,3 +27,17 @@ generate_content:
     - git push origin HEAD:${CI_COMMIT_REF_NAME} || echo "Nothing to push"
   environment:
     name: production
+
+pages:
+  stage: deploy
+  script:
+    - echo "Installing dependencies..."
+    - npm install
+    - echo "Building site..."
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
