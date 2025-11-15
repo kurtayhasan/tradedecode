@@ -233,11 +233,44 @@ const { title, date, description, content } = Astro.props;
     <main>
       <article>
         <div class="content" set:html={content}></div>
+        
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e0e0e0;">
+          <h3 style="color: #667eea; margin-bottom: 1rem;">📢 Share This Article</h3>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=https://tradedecode.com/posts/${Astro.params.slug}`} 
+               target="_blank" 
+               style="background: #1DA1F2; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none;">
+              🐦 Twitter
+            </a>
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=https://tradedecode.com/posts/${Astro.params.slug}`} 
+               target="_blank" 
+               style="background: #4267B2; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none;">
+              📘 Facebook
+            </a>
+            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=https://tradedecode.com/posts/${Astro.params.slug}`} 
+               target="_blank" 
+               style="background: #0077b5; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none;">
+              💼 LinkedIn
+            </a>
+          </div>
+        </div>
+        
+        <div style="margin-top: 2rem; padding: 1.5rem; background: #f8f9ff; border-radius: 8px; border-left: 4px solid #667eea;">
+          <p style="margin: 0; color: #666;">
+            <strong>💡 Disclaimer:</strong> This content is AI-generated for educational purposes. Always do your own research before making investment decisions.
+          </p>
+        </div>
       </article>
+      
+      <div style="margin-top: 3rem; text-align: center;">
+        <a href="/" style="display: inline-block; background: #667eea; color: white; padding: 0.75rem 2rem; border-radius: 25px; text-decoration: none; font-weight: 600;">
+          ← Back to All Articles
+        </a>
+      </div>
     </main>
     
     <footer>
-      <p>Powered by Astro + HuggingFace AI</p>
+      <p>Powered by Astro + Gemini AI</p>
       <p style="margin-top: 0.5rem;">
         <a href="/privacy-policy" style="color: #667eea; margin: 0 0.5rem;">Privacy Policy</a> |
         <a href="/cookie-policy" style="color: #667eea; margin: 0 0.5rem;">Cookie Policy</a> |

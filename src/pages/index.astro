@@ -12,9 +12,17 @@ const posts = files
     const slug = raw.match(/slug: "(.*)"/)?.[1] || "";
     const date = raw.match(/date: "(.*)"/)?.[1] || "";
     const description = raw.match(/description: "(.*)"/)?.[1] || "";
-    return { title, slug, date, description };
+    const tags = raw.match(/tags: \[(.*)\]/)?.[1]?.split(',').map(t => t.trim().replace(/"/g, '')) || [];
+    return { title, slug, date, description, tags };
   })
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  .sort((a, b) => {
+    const dateA = new Date(a.date || '1970-01-01');
+    const dateB = new Date(b.date || '1970-01-01');
+    return dateB.getTime() - dateA.getTime();
+  });
+
+const featuredPosts = posts.slice(0, 3);
+const recentPosts = posts.slice(3, 9);
 ---
 
 <!DOCTYPE html>
@@ -22,33 +30,32 @@ const posts = files
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
- <meta name="google-site-verification" content="h0AS43lxdvjySrp2OFIkl9UXVTLNCjg4m1ttaJE-UWI" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JFHH6R4CSE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-JFHH6R4CSE');
-</script>
-<title>TradeDecode — AI-Powered Trading Blog</title>
-    <meta name="description" content="Automated AI-generated trading and cryptocurrency insights" />
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JFHH6R4CSE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JFHH6R4CSE');
+    </script>
+    
+    <title>TradeDecode — AI-Powered Trading & Crypto Insights</title>
+    <meta name="description" content="Get the latest AI-generated trading strategies, cryptocurrency analysis, and market insights. Updated daily with actionable content." />
     <link rel="canonical" href="https://tradedecode.com/" />
     <link rel="alternate" type="application/rss+xml" title="TradeDecode RSS Feed" href="/rss.xml" />
     
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://tradedecode.com/" />
     <meta property="og:title" content="TradeDecode — AI-Powered Trading Blog" />
-    <meta property="og:description" content="Automated AI-generated trading and cryptocurrency insights" />
+    <meta property="og:description" content="Daily trading insights powered by AI" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://tradedecode.com/" />
     <meta property="twitter:title" content="TradeDecode — AI-Powered Trading Blog" />
-    <meta property="twitter:description" content="Automated AI-generated trading and cryptocurrency insights" />
+    
     <style>
       * {
         margin: 0;
@@ -66,7 +73,7 @@ const posts = files
       header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 3rem 2rem;
+        padding: 3rem 2rem 2rem;
         text-align: center;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       }
@@ -79,23 +86,137 @@ const posts = files
       header p {
         font-size: 1.1rem;
         opacity: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      
+      .header-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+      }
+      
+      .stat {
+        background: rgba(255,255,255,0.1);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        backdrop-filter: blur(10px);
+      }
+      
+      .stat-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      
+      .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
       }
       
       main {
-        max-width: 900px;
-        margin: 2rem auto;
-        padding: 0 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+        color: #667eea;
+        margin: 2rem 0 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .featured-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+      
+      .featured-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+      }
+      
+      .featured-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      }
+      
+      .featured-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #667eea;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      
+      .card-content {
+        padding: 1.5rem;
+      }
+      
+      .card-content a {
+        text-decoration: none;
+        color: inherit;
+      }
+      
+      .card-content h3 {
+        color: #667eea;
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+      }
+      
+      .card-meta {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      
+      .card-description {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+      
+      .card-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      
+      .tag {
+        background: #f0f0f0;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        color: #666;
       }
       
       .posts-list {
         list-style: none;
+        display: grid;
+        gap: 1.5rem;
       }
       
       .post-card {
         background: white;
         border-radius: 8px;
         padding: 1.5rem;
-        margin-bottom: 1.5rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         transition: transform 0.2s, box-shadow 0.2s;
       }
@@ -111,39 +232,58 @@ const posts = files
         display: block;
       }
       
-      .post-card h2 {
+      .post-card h3 {
         color: #667eea;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         margin-bottom: 0.5rem;
       }
       
-      .post-meta {
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-      }
-      
-      .post-description {
-        color: #555;
-        line-height: 1.5;
-      }
-      
-      .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
+      .sidebar {
         background: white;
-        border-radius: 8px;
+        border-radius: 12px;
+        padding: 1.5rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
       }
       
-      .empty-state h2 {
+      .sidebar h3 {
         color: #667eea;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+      
+      .sidebar-content {
+        color: #666;
+        line-height: 1.8;
+      }
+      
+      .cta-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        margin: 3rem 0;
+      }
+      
+      .cta-box h3 {
+        font-size: 1.5rem;
         margin-bottom: 1rem;
       }
       
-      .empty-state p {
-        color: #666;
-        margin-bottom: 0.5rem;
+      .cta-button {
+        display: inline-block;
+        background: white;
+        color: #667eea;
+        padding: 0.75rem 2rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.2s;
+      }
+      
+      .cta-button:hover {
+        transform: scale(1.05);
       }
       
       footer {
@@ -151,39 +291,113 @@ const posts = files
         padding: 2rem;
         color: #666;
         margin-top: 4rem;
+        background: white;
+      }
+      
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2rem;
+        }
+        
+        .featured-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .header-stats {
+          gap: 1rem;
+        }
       }
     </style>
   </head>
   <body>
     <header>
       <h1>🚀 TradeDecode</h1>
-      <p>AI-Powered Trading & Crypto Insights</p>
+      <p>AI-Powered Trading & Crypto Insights | Updated Daily</p>
+      <div class="header-stats">
+        <div class="stat">
+          <div class="stat-number">{posts.length}+</div>
+          <div class="stat-label">Articles</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">Daily</div>
+          <div class="stat-label">Updates</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">AI-Generated</div>
+        </div>
+      </div>
     </header>
     
-    <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;"><iframe data-aa='2417279' src='//acceptable.a-ads.com/2417279/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe></div>
+    <div id="frame" style="width: 100%;margin: 2rem auto;position: relative; z-index: 99998;">
+      <iframe data-aa='2417279' src='//acceptable.a-ads.com/2417279/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    </div>
     
     <main>
-      {posts.length > 0 ? (
-        <ul class="posts-list">
-          {posts.map(post => (
-            <li class="post-card">
-              <a href={`/posts/${post.slug}`}>
-                <h2>{post.title}</h2>
-                <div class="post-meta">📅 {post.date}</div>
-                <p class="post-description">{post.description}</p>
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div class="empty-state">
-          <h2>🤖 Content Generation Starting Soon</h2>
-          <p>Our AI bot will automatically generate trading insights every hour.</p>
-          <p>First post coming up shortly!</p>
-        </div>
+      {featuredPosts.length > 0 && (
+        <>
+          <h2 class="section-title">⭐ Featured Articles</h2>
+          <div class="featured-grid">
+            {featuredPosts.map(post => (
+              <div class="featured-card">
+                <span class="featured-badge">NEW</span>
+                <div class="card-content">
+                  <a href={`/posts/${post.slug}`}>
+                    <h3>{post.title}</h3>
+                    <div class="card-meta">
+                      <span>📅 {post.date}</span>
+                      <span>📖 5 min read</span>
+                    </div>
+                    <p class="card-description">{post.description}</p>
+                    {post.tags.length > 0 && (
+                      <div class="card-tags">
+                        {post.tags.slice(0, 3).map(tag => (
+                          <span class="tag">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
+      
+      <div class="cta-box">
+        <h3>📬 Never Miss an Update</h3>
+        <p style="margin-bottom: 1.5rem;">Get the latest trading insights delivered to your feed reader</p>
+        <a href="/rss.xml" class="cta-button">Subscribe to RSS Feed</a>
+      </div>
+      
+      {recentPosts.length > 0 && (
+        <>
+          <h2 class="section-title">📚 Recent Articles</h2>
+          <ul class="posts-list">
+            {recentPosts.map(post => (
+              <li class="post-card">
+                <a href={`/posts/${post.slug}`}>
+                  <h3>{post.title}</h3>
+                  <div class="card-meta">
+                    <span>📅 {post.date}</span>
+                  </div>
+                  <p class="card-description">{post.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      
+      <div class="sidebar" style="margin-top: 3rem;">
+        <h3>📊 About TradeDecode</h3>
+        <div class="sidebar-content">
+          <p>TradeDecode uses advanced AI technology to generate comprehensive trading and cryptocurrency content. Our articles cover technical analysis, market strategies, risk management, and the latest trends in digital assets.</p>
+          <p style="margin-top: 1rem;"><strong>Topics we cover:</strong> Cryptocurrency trading, Technical analysis, Risk management, Market trends, DeFi, NFTs, and more.</p>
+        </div>
+      </div>
     </main>
-    <a href="https://aads.com/advertise/?partner=2417366"><img src="https://aads.com/a_ads_banners/gif/english/728x90/simple_v1.gif" alt="Advertise with Anonymous Ads" width="728px" height="90px" /></a>
+    
     <footer>
       <p>Powered by Astro + Gemini AI | Auto-updated every 4 hours</p>
       <p style="margin-top: 0.5rem;">
