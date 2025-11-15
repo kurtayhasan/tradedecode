@@ -115,30 +115,101 @@ const { title, date, description, content } = Astro.props;
         white-space: pre-wrap;
         line-height: 1.8;
         color: #444;
+        font-size: 1.05rem;
       }
       
       .content h1, .content h2, .content h3 {
         color: #667eea;
-        margin-top: 1.5rem;
+        margin-top: 2rem;
         margin-bottom: 1rem;
+        font-weight: 600;
       }
       
       .content h1 {
-        font-size: 1.8rem;
-        border-bottom: 2px solid #667eea;
+        font-size: 2rem;
+        border-bottom: 3px solid #667eea;
         padding-bottom: 0.5rem;
+        margin-top: 2.5rem;
       }
       
       .content h2 {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+        border-left: 4px solid #667eea;
+        padding-left: 1rem;
       }
       
       .content h3 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        color: #764ba2;
       }
       
       .content p {
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+      }
+      
+      .content strong {
+        color: #333;
+        font-weight: 600;
+      }
+      
+      .content em {
+        color: #555;
+        font-style: italic;
+      }
+      
+      .content ul, .content ol {
+        margin: 1rem 0 1.5rem 2rem;
+        line-height: 1.9;
+      }
+      
+      .content li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .content blockquote {
+        border-left: 4px solid #667eea;
+        background: #f8f9ff;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 4px;
+        font-style: italic;
+      }
+      
+      .content code {
+        background: #f4f4f4;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        color: #d63384;
+      }
+      
+      .content hr {
+        border: none;
+        border-top: 2px solid #e0e0e0;
+        margin: 2rem 0;
+      }
+      
+      .content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+      }
+      
+      .content th, .content td {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        text-align: left;
+      }
+      
+      .content th {
+        background: #667eea;
+        color: white;
+        font-weight: 600;
+      }
+      
+      .content tr:nth-child(even) {
+        background: #f9f9f9;
       }
       
       footer {

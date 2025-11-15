@@ -62,7 +62,7 @@ function extractMetadata(text) {
 }
 
 async function generateContent(topic) {
-  const prompt = `You are a professional trading and cryptocurrency content writer. Write a comprehensive, SEO-optimized article in English.
+  const prompt = `You are a professional trading and cryptocurrency content writer. Write a comprehensive, SEO-optimized, VISUALLY ENGAGING article in English.
 
 IMPORTANT: Start your response with these exact lines:
 TITLE: [Write an engaging, SEO-friendly title about ${topic}]
@@ -71,18 +71,46 @@ META_DESCRIPTION: [Write a compelling 150-160 character meta description]
 Then write the full article about: ${topic}
 
 Article Requirements:
-- 1000 to 1500 words
-- Use proper markdown headings (# ## ###)
-- Include an engaging introduction
-- Provide actionable insights and real value
-- Use bullet points and lists where appropriate
-- Include a strong conclusion
-- Write in a professional yet accessible tone
-- Focus on practical information for traders
-- No fluff or filler content
-- Ensure content is unique and valuable
+- 1200 to 1800 words
+- Use proper markdown formatting extensively:
+  * # for main title
+  * ## for major sections
+  * ### for subsections
+  * **bold** for key terms and important points
+  * *italic* for emphasis
+  * > blockquotes for important tips or warnings
+  * \`code\` for technical terms or commands
+  * Numbered lists (1. 2. 3.) for step-by-step guides
+  * Bullet points (- or *) for feature lists
+  * --- for section breaks
+  * Tables when comparing features or data
 
-Write the complete article now:`;
+- Structure:
+  * Engaging introduction with a hook
+  * 5-7 well-organized main sections
+  * Each section should have 2-3 subsections
+  * Use visual breaks between sections
+  * Include "Key Takeaways" box at the end
+  * Strong conclusion with call-to-action
+
+- Content Style:
+  * Professional yet conversational tone
+  * Use real examples and scenarios
+  * Include specific numbers and data when relevant
+  * Add "💡 Pro Tip:" callouts
+  * Add "⚠️ Warning:" for risks
+  * Add "✅ Best Practice:" for recommendations
+  * Break long paragraphs (max 3-4 sentences)
+  * Use transition words between sections
+
+- SEO & Value:
+  * Focus on actionable, practical information
+  * Answer "what, why, how, when" questions
+  * Include long-tail keywords naturally
+  * No fluff or filler content
+  * Unique insights and perspectives
+
+Write the complete, visually rich article now:`;
 
   try {
     const res = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
