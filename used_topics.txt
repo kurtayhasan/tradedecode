@@ -5,3 +5,4 @@ how indicators work
 technical analysis patterns
 ai trading tools
 bitcoin guide
+exchange comparisons
