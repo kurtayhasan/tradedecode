@@ -6,3 +6,4 @@ technical analysis patterns
 ai trading tools
 bitcoin guide
 exchange comparisons
+ethereum staking
