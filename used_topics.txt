@@ -3,3 +3,4 @@ bitcoin guide
 how indicators work
 crypto trading basics
 exchange comparisons
+ethereum staking
