@@ -4,3 +4,4 @@ how indicators work
 crypto trading basics
 exchange comparisons
 ethereum staking
+ai trading tools
