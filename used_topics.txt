@@ -5,3 +5,4 @@ crypto trading basics
 exchange comparisons
 ethereum staking
 ai trading tools
+technical analysis patterns
