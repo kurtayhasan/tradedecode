@@ -40,8 +40,9 @@ const recentPosts = posts.slice(3, 9);
       gtag('config', 'G-JFHH6R4CSE');
     </script>
     
-    <title>TradeDecode — AI-Powered Trading & Crypto Insights</title>
-    <meta name="description" content="Get the latest AI-generated trading strategies, cryptocurrency analysis, and market insights. Updated daily with actionable content." />
+    <title>TradeDecode — AI-Powered Trading & Crypto Insights | Daily Market Analysis</title>
+    <meta name="description" content="Get the latest AI-generated trading strategies, cryptocurrency analysis, and market insights. Updated daily with actionable content. Learn Bitcoin, Ethereum, DeFi, technical analysis, and risk management." />
+    <meta name="keywords" content="trading, cryptocurrency, bitcoin, ethereum, technical analysis, trading strategies, crypto news, DeFi, risk management, AI trading, market analysis" />
     <link rel="canonical" href="https://tradedecode.com/" />
     <link rel="alternate" type="application/rss+xml" title="TradeDecode RSS Feed" href="/rss.xml" />
     
@@ -55,6 +56,52 @@ const recentPosts = posts.slice(3, 9);
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://tradedecode.com/" />
     <meta property="twitter:title" content="TradeDecode — AI-Powered Trading Blog" />
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TradeDecode",
+      "url": "https://tradedecode.com",
+      "description": "AI-powered trading and cryptocurrency insights blog",
+      "publisher": {
+        "@type": "Organization",
+        "name": "TradeDecode",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://tradedecode.com/logo.png"
+        }
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tradedecode.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "TradeDecode Blog",
+      "description": "Daily trading and cryptocurrency insights",
+      "url": "https://tradedecode.com",
+      "inLanguage": "en-US",
+      "blogPost": {posts.slice(0, 5).map(post => ({
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.description,
+        "datePublished": post.date,
+        "url": `https://tradedecode.com/posts/${post.slug}`,
+        "author": {
+          "@type": "Organization",
+          "name": "TradeDecode AI"
+        }
+      }))}
+    }
+    </script>
     
     <style>
       * {
@@ -395,6 +442,46 @@ const recentPosts = posts.slice(3, 9);
           <p>TradeDecode uses advanced AI technology to generate comprehensive trading and cryptocurrency content. Our articles cover technical analysis, market strategies, risk management, and the latest trends in digital assets.</p>
           <p style="margin-top: 1rem;"><strong>Topics we cover:</strong> Cryptocurrency trading, Technical analysis, Risk management, Market trends, DeFi, NFTs, and more.</p>
         </div>
+      </div>
+      
+      <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <h2 style="color: #667eea; margin-bottom: 1.5rem; font-size: 1.8rem;">🎓 Learn Trading & Crypto</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+          <div>
+            <h3 style="color: #764ba2; font-size: 1.2rem; margin-bottom: 0.5rem;">📈 For Beginners</h3>
+            <p style="color: #666; line-height: 1.6;">Start your trading journey with our beginner-friendly guides on cryptocurrency basics, trading fundamentals, and risk management strategies.</p>
+          </div>
+          <div>
+            <h3 style="color: #764ba2; font-size: 1.2rem; margin-bottom: 0.5rem;">📊 Technical Analysis</h3>
+            <p style="color: #666; line-height: 1.6;">Master chart patterns, indicators, and trading signals to make informed decisions in volatile crypto markets.</p>
+          </div>
+          <div>
+            <h3 style="color: #764ba2; font-size: 1.2rem; margin-bottom: 0.5rem;">🤖 AI Trading Tools</h3>
+            <p style="color: #666; line-height: 1.6;">Discover the latest AI-powered trading bots, automation tools, and algorithmic strategies for 2025.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 2rem; padding: 2rem; background: #f8f9ff; border-radius: 12px; border-left: 4px solid #667eea;">
+        <h2 style="color: #667eea; margin-bottom: 1rem; font-size: 1.5rem;">🔍 Why Choose TradeDecode?</h2>
+        <ul style="list-style: none; padding: 0; color: #666; line-height: 2;">
+          <li>✅ <strong>Daily Updates:</strong> Fresh content generated every day covering the latest market trends</li>
+          <li>✅ <strong>AI-Powered Insights:</strong> Advanced algorithms analyze market data to provide actionable strategies</li>
+          <li>✅ <strong>Comprehensive Coverage:</strong> From Bitcoin basics to advanced DeFi strategies</li>
+          <li>✅ <strong>Free Access:</strong> All articles are completely free to read and share</li>
+          <li>✅ <strong>SEO Optimized:</strong> Easy to find answers to your trading questions</li>
+        </ul>
+      </div>
+      
+      <div style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 8px; text-align: center;">
+        <p style="color: #666; margin-bottom: 1rem;">
+          <strong>Popular Topics:</strong> 
+          <a href="/?topic=bitcoin" style="color: #667eea; margin: 0 0.5rem;">Bitcoin Trading</a> |
+          <a href="/?topic=ethereum" style="color: #667eea; margin: 0 0.5rem;">Ethereum Staking</a> |
+          <a href="/?topic=defi" style="color: #667eea; margin: 0 0.5rem;">DeFi Strategies</a> |
+          <a href="/?topic=technical-analysis" style="color: #667eea; margin: 0 0.5rem;">Technical Analysis</a> |
+          <a href="/?topic=risk-management" style="color: #667eea; margin: 0 0.5rem;">Risk Management</a>
+        </p>
       </div>
     </main>
     
