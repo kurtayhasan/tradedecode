@@ -6,3 +6,4 @@ technical analysis patterns
 bitcoin guide
 ai trading tools
 forex scalping strategy
+how indicators work
