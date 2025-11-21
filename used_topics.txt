@@ -7,3 +7,4 @@ bitcoin guide
 ai trading tools
 forex scalping strategy
 how indicators work
+ethereum staking
