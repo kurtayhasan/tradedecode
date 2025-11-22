@@ -5,3 +5,4 @@ bitcoin guide
 forex scalping strategy
 crypto trading basics
 how indicators work
+ethereum staking
