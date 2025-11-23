@@ -2,3 +2,4 @@ bitcoin guide
 crypto trading basics
 ethereum staking
 risk management in trading
+ai trading tools
