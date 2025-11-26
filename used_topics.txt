@@ -7,3 +7,4 @@ bitcoin guide
 risk management in trading
 exchange comparisons
 how indicators work
+crypto trading basics
