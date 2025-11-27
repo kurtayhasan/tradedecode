@@ -3,3 +3,4 @@ forex scalping strategy
 technical analysis patterns
 ethereum staking
 crypto trading basics
+how indicators work
