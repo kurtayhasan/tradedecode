@@ -3,3 +3,4 @@ crypto trading basics
 ethereum staking
 technical analysis patterns
 ai trading tools
+how indicators work
