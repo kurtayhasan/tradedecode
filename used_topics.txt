@@ -5,3 +5,4 @@ technical analysis patterns
 ai trading tools
 how indicators work
 forex scalping strategy
+exchange comparisons
